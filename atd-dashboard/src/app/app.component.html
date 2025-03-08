@@ -1,0 +1,46 @@
+<div class="dashboard">
+  <form #sensorForm="ngForm">
+    <input 
+      [(ngModel)]="sensorState" 
+      name="sensorState"
+      maxlength="9" 
+      placeholder="Enter sensor state (e.g., GRGGGGGGG)" 
+      required
+      pattern="^[GRY]+$" 
+      #sensorStateInput="ngModel" 
+    />
+
+    <div *ngIf="sensorStateInput.invalid && (sensorStateInput.dirty || sensorStateInput.touched)">
+      <div *ngIf="sensorStateInput.errors?.['required']" class="error-message">
+        Input is required.
+      </div>
+      <div *ngIf="sensorStateInput.errors?.['pattern']" class="error-message">
+        Only the characters G, R, and Y are allowed.
+        
+      </div>
+      <div *ngIf="sensorStateInput.errors?.['maxlength']" class="error-message">
+        Input should not exceed 9 characters.
+      </div>
+    </div>
+  </form>
+  
+  <div class="head">
+    <div class="line"></div>
+    <div class="horizontal-line"></div>
+    <div class="tilted-line"></div>
+    <div class="tilted-line-right"></div>
+    <div class="tilted-line-right-down"></div>
+    <div class="tilted-line-left-down"></div>
+
+    
+    <div *ngFor="let sensor of sensorPositions; let i = index" 
+         class="dot" 
+         [ngStyle]="{'top': sensor.top, 'left': sensor.left, 'background-color': getColor(i)}">
+      
+      <span class="sensor-number" 
+            [ngClass]="{'number-five': i === 4, 'number-eight': i === 7, 'number-one': i === 0}">
+        {{ i + 1 }}
+      </span>
+    </div>
+  </div>
+</div>
